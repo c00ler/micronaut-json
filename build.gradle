@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+}
+
+group 'com.github.avenderov'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+ext {
+    jacksonVersion = '2.11.0'
+    micronautVersion = '2.0.0.M3'
+    logbackVersion = '1.2.3'
+    junitVersion = '5.6.2'
+    assertjVersion = '3.16.1'
+    jsonUnitVersion = '2.17.0'
+    streamExVersion = '0.7.2'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform("com.fasterxml.jackson:jackson-bom:${jacksonVersion}")
+    implementation platform("io.micronaut:micronaut-bom:${micronautVersion}")
+
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'io.micronaut:micronaut-inject'
+    implementation 'io.micronaut:micronaut-runtime'
+    implementation 'org.slf4j:slf4j-api'
+    implementation "one.util:streamex:${streamExVersion}"
+
+    runtimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
+
+    annotationProcessor platform("io.micronaut:micronaut-bom:${micronautVersion}")
+    annotationProcessor 'io.micronaut:micronaut-inject-java'
+
+    testImplementation platform("org.junit:junit-bom:${junitVersion}")
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation "org.assertj:assertj-core:${assertjVersion}"
+    testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitVersion}"
+
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
